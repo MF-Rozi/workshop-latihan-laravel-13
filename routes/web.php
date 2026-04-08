@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Models\Destination;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,4 +41,17 @@ Route::get("/destinasi", function () {
 Route::get("/user", function () {
     $users = User::where('name', 'Rozi')->get();
     return view('pages.profile', compact('users'));
+});
+
+
+Route::get("/destinations", function () {
+
+    $destinations = Destination::all();
+    return view('pages.indexDestinasi', compact('destinations'));
+});
+
+
+Route::get("/detaildestinasi/{id}", function ($id) {
+    $destination = Destination::find($id);
+    return view('pages.detaildestinasi', compact('destination'));
 });
