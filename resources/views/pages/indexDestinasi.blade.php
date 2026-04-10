@@ -2,7 +2,20 @@
 
 
 @section('content')
+
 <div class="container">
+
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-primary" href="/destinations/create">Add Destination</a>
+
+    </div>
+
     <table class="table table-striped-columns">
         <thead>
             <tr>
@@ -13,6 +26,7 @@
                 <th>Price</th>
                 <th>Working Hours</th>
                 <th>Working Days</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +40,14 @@
                 <td>{{ $d->ticket_price }}</td>
                 <td>{{ $d->working_hours }}</td>
                 <td>{{ $d->working_days }}</td>
+                <td>
+                    <a href="/destinations/{{ $d->id }}/edit" class="btn btn-warning">Edit</a>
+                    <form action="/destination/{{ $d->id }}" method="post" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->name }}?')">Delete</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

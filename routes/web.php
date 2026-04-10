@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Destination;
+use App\Http\Controllers\DestinationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,14 +45,21 @@ Route::get("/user", function () {
 });
 
 
-Route::get("/destinations", function () {
+Route::get(
+    "/destinations",
+    [DestinationController::class, 'index']
+);
 
-    $destinations = Destination::all();
-    return view('pages.indexDestinasi', compact('destinations'));
-});
+
+Route::get("/detaildestinasi/{id}", [DestinationController::class, 'show']);
 
 
-Route::get("/detaildestinasi/{id}", function ($id) {
-    $destination = Destination::find($id);
-    return view('pages.detaildestinasi', compact('destination'));
-});
+Route::get("/destinations/create", [DestinationController::class, 'create']);
+Route::post("/destinations", [DestinationController::class, 'store']);
+
+
+Route::delete('/destination/{id}', [DestinationController::class, 'delete']);
+
+
+Route::get("/destinations/{id}/edit", [DestinationController::class, 'edit']);
+Route::put("/destinations/{id}/update", [DestinationController::class, 'update']);
