@@ -11,9 +11,20 @@
     </div>
     @endif
 
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>List of Destinations</h2>
+        <form action="/destinations" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ request('search') }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+
+        </form>
         <a class="btn btn-primary" href="/destinations/create">Add Destination</a>
 
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+        {{ $destinations->links('pagination::bootstrap-5') }}
     </div>
 
     <table class="table table-striped-columns">
@@ -53,6 +64,47 @@
         </tbody>
 
     </table>
+    <div class="mt-3 d-flex justify-content-center">
+        {{ $destinations->links('pagination::bootstrap-5') }}
+    </div>
+
 </div>
 
 @endsection
+
+@push('styles')
+<style>
+    .pagination {
+        --bs-pagination-padding-x: 0.5rem;
+        --bs-pagination-padding-y: 0.25rem;
+        --bs-pagination-font-size: 0.875rem;
+    }
+
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    class alert {
+        constructor(message) {
+            this.message = message;
+        }
+
+        show() {
+            alert(this.message);
+        }
+    }
+    let alertElement = document.querySelector('.alert');
+    if (alertElement) {
+        setTimeout(() => {
+            alertElement.style.transition = "opacity 3s ease-out";
+            alertElement.style.opacity = "0";
+            setTimeout(() => {
+                alertElement.remove();
+            }, 3000);
+        })
+    }
+
+</script>
+
+@endpush
