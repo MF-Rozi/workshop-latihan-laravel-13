@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-use App\Models\Destination;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,7 +39,7 @@ Route::get("/destinasi", function () {
     ];
     return view('pages.destinasi', compact('destinasi'));
 });
-Route::get("/user", function () {
+Route::get("/profile-user", function () {
     $users = User::where('name', 'Rozi')->get();
     return view('pages.profile', compact('users'));
 });
@@ -63,3 +63,13 @@ Route::delete('/destination/{id}', [DestinationController::class, 'delete']);
 
 Route::get("/destinations/{id}/edit", [DestinationController::class, 'edit']);
 Route::put("/destinations/{id}/update", [DestinationController::class, 'update']);
+
+
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [UserController::class, 'update'])->name('update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+});
