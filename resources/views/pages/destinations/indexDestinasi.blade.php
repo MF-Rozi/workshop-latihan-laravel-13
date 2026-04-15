@@ -13,7 +13,7 @@
 
     <div class="d-flex justify-content-between mb-3">
         <h2>List of Destinations</h2>
-        <form action="/destinations" method="GET">
+        <form action="{{ route('destinations.index') }}" method="GET">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ request('search') }}">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -43,7 +43,7 @@
         <tbody>
             @foreach ($destinations as $d)
             <tr>
-                <td><a href="detaildestinasi/{{ $d->id }}">{{ $d->id }}</a></td>
+                <td><a href="{{ route('destinations.show', $d->id) }}">{{ $d->id }}</a></td>
 
                 <td>{{ $d->name }}</td>
                 <td>{{ $d->description }}</td>
@@ -52,8 +52,8 @@
                 <td>{{ $d->working_hours }}</td>
                 <td>{{ $d->working_days }}</td>
                 <td>
-                    <a href="/destinations/{{ $d->id }}/edit" class="btn btn-warning">Edit</a>
-                    <form action="/destination/{{ $d->id }}" method="post" style="display: inline;">
+                    <a href="{{ route('destinations.edit', $d->id) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ route('destinations.destroy', $d->id) }}" method="post" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete {{ $d->name }}?')">Delete</button>

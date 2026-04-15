@@ -17,18 +17,18 @@ class DestinationController extends Controller
         } else {
             $destinations = Destination::orderby('id')->paginate(5);
         }
-        return view('pages.indexDestinasi', compact('destinations'));
+        return view('pages.destinations.indexDestinasi', compact('destinations'));
     }
 
     public function show($id)
     {
         $destination = Destination::find($id);
-        return view('pages.detaildestinasi', compact('destination'));
+        return view('pages.destinations.detaildestinasi', compact('destination'));
     }
 
     public function create()
     {
-        return view('pages.createDestination');
+        return view('pages.destinations.createDestination');
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class DestinationController extends Controller
     public function edit($id)
     {
         $destination = Destination::find($id);
-        return view('pages.editDestination', compact('destination'));
+        return view('pages.destinations.editDestination', compact('destination'));
     }
     public function update(Request $request, $id)
     {

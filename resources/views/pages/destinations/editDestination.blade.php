@@ -2,7 +2,7 @@
 
 @section("content")
 
-<form action="/destinations/{{ $destination->id }}/update" method="post" class="form-floating">
+<form action="{{ route('destinations.update', $destination->id) }}" method="post" class="form-floating">
     @csrf
     @method("put")
     <div class="form-floating mb-3">

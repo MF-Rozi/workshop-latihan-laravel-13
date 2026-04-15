@@ -45,31 +45,45 @@ Route::get("/profile-user", function () {
 });
 
 
-Route::get(
-    "/destinations",
-    [DestinationController::class, 'index']
-);
+// Route::get(
+//     "/destinations",
+//     [DestinationController::class, 'index']
+// );
 
 
-Route::get("/detaildestinasi/{id}", [DestinationController::class, 'show']);
+// Route::get("/detaildestinasi/{id}", [DestinationController::class, 'show']);
 
 
-Route::get("/destinations/create", [DestinationController::class, 'create']);
-Route::post("/destinations", [DestinationController::class, 'store']);
+// Route::get("/destinations/create", [DestinationController::class, 'create']);
+// Route::post("/destinations", [DestinationController::class, 'store']);
 
 
-Route::delete('/destination/{id}', [DestinationController::class, 'delete']);
+// Route::delete('/destination/{id}', [DestinationController::class, 'delete']);
 
 
-Route::get("/destinations/{id}/edit", [DestinationController::class, 'edit']);
-Route::put("/destinations/{id}/update", [DestinationController::class, 'update']);
+// Route::get("/destinations/{id}/edit", [DestinationController::class, 'edit']);
+// Route::put("/destinations/{id}/update", [DestinationController::class, 'update']);
+
+Route::prefix('destinations')->name('destinations.')->group(function () {
+    Route::get('/', [DestinationController::class, 'index'])->name('index');
+    Route::get('/create', [DestinationController::class, 'create'])->name('create');
+    Route::post('/', [DestinationController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [DestinationController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [DestinationController::class, 'update'])->name('update');
+    Route::delete('/{id}', [DestinationController::class, 'delete'])->name('destroy');
+    Route::get("/{id}/show", [DestinationController::class, 'show'])->name('show');
+});
 
 
-Route::prefix('user')->name('user.')->group(function () {
+
+Route::prefix('users')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/create', [UserController::class, 'create'])->name('create');
     Route::post('/', [UserController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/{id}', [UserController::class, 'update'])->name('update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+    Route::get("/{id}/show", [UserController::class, 'show'])->name('show');
 });
+
+Route::resource('attractions', \App\Http\Controllers\AttractionController::class);
