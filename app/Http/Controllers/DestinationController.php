@@ -33,8 +33,16 @@ class DestinationController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable',
+            'location' => 'required|string|max:255',
+            'ticket_price' => 'required|numeric',
+            'working_hours' => 'required|string|max:255',
+            'working_days' => 'required|string|max:255',
+        ]);
 
-        Destination::create($request->all());
+        Destination::create($validated);
 
         return redirect('/destinations')->with('success', 'Destination created successfully.');
     }
@@ -56,11 +64,19 @@ class DestinationController extends Controller
     }
     public function update(Request $request, $id)
     {
-
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable',
+            'location' => 'required|string|max:255',
+            'ticket_price' => 'required|numeric',
+            'working_hours' => 'required|string|max:255',
+            'working_days' => 'required|string|max:255',
+        ]);
 
         $destination = Destination::find($id);
         if ($destination) {
-            $destination->update($request->all());
+
+            $destination->update($validated);
             return redirect('/destinations')->with('success', 'Destination updated successfully.');
         } else {
             return redirect('/destinations')->with('error', 'Destination not found.');

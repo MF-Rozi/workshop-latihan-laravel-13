@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Destination;
 
 class AttractionController extends Controller
 {
@@ -23,16 +24,19 @@ class AttractionController extends Controller
     }
     public function create()
     {
-        return view('pages.attractions.create');
+        $destinations = Destination::all();
+        return view('pages.attractions.create', compact('destinations'));
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
-        ]);
-
-        \App\Models\Attraction::create($request->all());
+        $validated = $request->validate(
+            [
+                'destination_id' => 'required|exists:destinations,id',
+                'name' => 'required|string|max:255',
+                'description' => 'nullable',
+            ]
+        );
+        \App\Models\Attraction::create($validated);
 
         return redirect()->route('attractions.index')
             ->with('success', 'Attraction created successfully.');
@@ -44,18 +48,20 @@ class AttractionController extends Controller
     }
     public function edit($id)
     {
+        $destinations = Destination::all();
         $attraction = \App\Models\Attraction::findOrFail($id);
-        return view('pages.attractions.edit', compact('attraction'));
+        return view('pages.attractions.edit', compact('attraction', 'destinations'));
     }
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
+            'destination_id' => 'required|exists:destinations,id',
             'name' => 'required',
             'description' => 'nullable',
         ]);
 
         $attraction = \App\Models\Attraction::findOrFail($id);
-        $attraction->update($request->all());
+        $attraction->update($validated);
 
         return redirect()->route('attractions.index')
             ->with('success', 'Attraction updated successfully.');
