@@ -12,7 +12,7 @@
 </div>
 @endif
 
-<form action="{{ route('destinations.update', $destination->id) }}" method="post" class="form-floating">
+<form action="{{ route('destinations.update', $destination->id) }}" method="post" class="form-floating" enctype="multipart/form-data">
     @csrf
     @method("put")
     <div class="form-floating mb-3">
@@ -55,6 +55,13 @@
         <input type="text" class="form-control" id="floatingInput" placeholder="Senin - Minggu" name="working_days" value="{{ $destination->working_days }}" required>
         <label for="floatingInput">Hari Operasional</label>
         @error('working_days')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="form-floating mb-3">
+        <input type="file" class="form-control" id="floatingInput" placeholder="Image" name="image" value="{{ old('image') }}" accept=".jpg,.jpeg,.png">
+        <label for="floatingInput">Gambar Destinasi</label>
+        @error('image')
         <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>

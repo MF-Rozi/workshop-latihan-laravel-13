@@ -5,7 +5,7 @@
 
     <div class="card-body">
         <a href="{{ route('destinations.edit',$destination->id) }}" class="btn btn-primary align-self-end">Edit Destinasi</a>
-
+        <img src="{{ asset('storage/images/' . $destination->image) }}" alt="{{ $destination->name }}" class="img-fluid">
         <h1>{{ $destination->name }}</h1>
         <p>{{ $destination->description }}</p>
         <p>Location: {{ $destination->location }}</p>
