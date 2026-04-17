@@ -87,3 +87,6 @@ Route::prefix('users')->name('user.')->group(function () {
 });
 
 Route::resource('attractions', \App\Http\Controllers\AttractionController::class);
+
+
+Route::resource('reviews', \App\Http\Controllers\ReviewController::class);
