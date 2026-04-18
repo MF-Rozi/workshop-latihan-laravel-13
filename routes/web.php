@@ -5,6 +5,16 @@ use App\Models\User;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\UserController;
 
+require __DIR__ . '/auth.php';
+
+Route::get('/dashboard', function () {
+    return redirect()->route('destinations.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/home', function () {
+    $destinations = \App\Models\Destination::all();
+    return view('landing.master', compact('destinations'));
+})->name('home');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -64,7 +74,7 @@ Route::get("/profile-user", function () {
 // Route::get("/destinations/{id}/edit", [DestinationController::class, 'edit']);
 // Route::put("/destinations/{id}/update", [DestinationController::class, 'update']);
 
-Route::prefix('destinations')->name('destinations.')->group(function () {
+Route::prefix('destinations')->name('destinations.')->middleware('auth')->group(function () {
     Route::get('/', [DestinationController::class, 'index'])->name('index');
     Route::get('/create', [DestinationController::class, 'create'])->name('create');
     Route::post('/', [DestinationController::class, 'store'])->name('store');
@@ -86,7 +96,7 @@ Route::prefix('users')->name('user.')->group(function () {
     Route::get("/{id}/show", [UserController::class, 'show'])->name('show');
 });
 
-Route::resource('attractions', \App\Http\Controllers\AttractionController::class);
+Route::resource('attractions', \App\Http\Controllers\AttractionController::class)->middleware('auth');
 
 
 Route::resource('reviews', \App\Http\Controllers\ReviewController::class);

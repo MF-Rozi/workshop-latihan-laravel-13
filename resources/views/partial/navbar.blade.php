@@ -22,6 +22,13 @@
                 <li class="nav-item ms-lg-3">
                     <a class="btn btn-light rounded-pill px-4 fw-bold text-primary" href="#">Login</a>
                 </li>
+                <li class="nav-item ms-lg-2">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-light rounded-pill px-4 fw-bold">Logout</button>
+                    </form>
+                </li>
+
             </ul>
         </div>
     </div>
